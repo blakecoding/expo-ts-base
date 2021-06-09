@@ -23,16 +23,18 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 
 // Apply middleware
 const sagaMiddleware = createSagaMiddleware();
+
+//Enchaner for Reactotron, react-native-debugger
 const enhancers = __DEV__
-  ? compose(applyMiddleware(sagaMiddleware), Reactotron.createEnhancer())
+  ? compose(
+      applyMiddleware(sagaMiddleware),
+      Reactotron.createEnhancer(),
+      (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+        (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+    )
   : applyMiddleware(sagaMiddleware);
+
 const store = createStore(persistedReducer, enhancers);
-// const store = createStore(
-//   persistedReducer, // @ts-ignore
-//   (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-//     // @ts-ignore
-//     (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-// );
 sagaMiddleware.run(rootSaga);
 
 const persistor = persistStore(store);
