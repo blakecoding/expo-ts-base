@@ -1,9 +1,25 @@
-interface IApp {
-  theme: String;
+import ACTION, { IAction } from "../constants/ActionName";
+
+export interface IAppState {
+  isDarkTheme: Boolean;
+  language: String;
 }
 
-const initState: IApp = {
-  theme: "dark",
+const initState: IAppState = {
+  isDarkTheme: false,
+  language: "en-US",
 };
 
-const app = (action: any, store: any) => {};
+export default function (
+  state: IAppState = initState,
+  action: IAction
+): IAppState {
+  switch (action.type) {
+    case ACTION.IS_DARK_THEME:
+      return Object.assign({}, state, {
+        isDarkTheme: action.payload,
+      });
+    default:
+      return state;
+  }
+}

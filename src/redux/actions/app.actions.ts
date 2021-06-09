@@ -1,6 +1,6 @@
-import ACTION from "./ActionName";
+import ACTION, { IAction } from "../constants/ActionName";
 
-export const setTheme = (payload: any) => ({
-  action: ACTION.SET_THEME,
+export const isDarkTheme = (payload: any): IAction => ({
+  type: ACTION.IS_DARK_THEME,
   payload,
 });
