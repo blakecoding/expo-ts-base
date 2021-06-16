@@ -5,6 +5,7 @@ import AuthAPI from "../api/auth";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
+import { StyledView } from "../StyledElement";
 
 export default function TabTwoScreen(props: any) {
   useEffect(() => {
@@ -23,7 +24,9 @@ export default function TabTwoScreen(props: any) {
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
+      <StyledView>
+        <Text>Hello</Text>
+      </StyledView>
     </View>
   );
 }
