@@ -8,40 +8,30 @@ import { PersistGate } from "redux-persist/integration/react";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
-import { IState } from "./redux/reducer";
-import { store, persistor } from "./redux/store/store";
+import { store, persistor, RootState } from "./redux/store/store";
+import messages from "./locales";
+import { flattenMessages } from "./utils/flattenMessages";
 
-// const _renderApp = () => {
-//   const isLoadingComplete = useCachedResources();
-//   const colorScheme = useColorScheme();
-
-//   if (!isLoadingComplete) {
-//     return null;
-//   } else {
-//     return (
-//       <SafeAreaProvider>
-//         <Navigation colorScheme={colorScheme} />
-//         <StatusBar />
-//       </SafeAreaProvider>
-//     );
-//   }
-// };
-
-const _renderApp = ({ locale }) => {
+const _renderApp = (props: any) => {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
   return (
     <PersistGate loading={null} persistor={persistor}>
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
+      <IntlProvider
+        locale={props.locale}
+        messages={flattenMessages(messages[props.locale])}
+      >
+        <SafeAreaProvider>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+        </SafeAreaProvider>
+      </IntlProvider>
     </PersistGate>
   );
 };
 
-const mapStateToProps = (state: IState) => ({
+const mapStateToProps = (state: RootState) => ({
   locale: state.app.language,
 });
 
